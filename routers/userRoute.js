@@ -1,9 +1,14 @@
+//internal export
 const express = require("express");
-
-const user_route = express();
 const session = require("express-session");
-const config = require("../config/config");
 
+//external import
+const config = require("../config/config");
+const auth = require("../middleware/auth");
+const userController = require("../controllers/userController");
+
+//for user route session
+const user_route = express();
 user_route.use(
   session({
     secret: config.sessionSecret,
@@ -12,13 +17,10 @@ user_route.use(
   })
 );
 
-const auth = require("../middleware/auth");
-const userController = require("../controllers/userController");
-
 user_route.set("view engine", "ejs");
 user_route.set("views", "./views/users");
 
-//
+//for file upload
 // const multer = require("multer");
 // const path = require("path");
 
@@ -35,8 +37,10 @@ user_route.set("views", "./views/users");
 
 // const upload = multer({ storage: storage });
 
+
+//all user routes
 user_route.get("/register", auth.isLogout, userController.loadRegister);
-//
+
 // user_route.post("/register", upload.single("image"), userController.insertUser);
 
 user_route.post("/register", userController.insertUser);
@@ -44,6 +48,7 @@ user_route.post("/register", userController.insertUser);
 user_route.get("/verify", userController.verifyMail);
 
 user_route.get("/", auth.isLogout, userController.loginLoad);
+
 user_route.get("/login", auth.isLogout, userController.loginLoad);
 
 user_route.post("/login", userController.verifyLogin);
@@ -60,4 +65,5 @@ user_route.get('/forget-password', auth.isLogout, userController.forgetPasswordL
 
 user_route.post('/forget-password', userController.resetPassword);
 
+//exports
 module.exports = user_route;

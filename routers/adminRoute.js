@@ -1,20 +1,21 @@
+
+//internal import
 const express = require("express");
-
-const admin_route = express();
-
 const bodyParser = require("body-parser");
-const config = require("../config/config");
 const session = require("express-session");
 
-
+//external import
+const config = require("../config/config");
 const adminController = require("../controllers/adminController");
 const auth = require("../middleware/adminAuth");
 
+const admin_route = express();
 admin_route.use(session({ secret: config.sessionSecret }));
 
 admin_route.use(bodyParser.urlencoded({ extended: true }));
 admin_route.use(bodyParser.json());
 
+//for ejs view engine
 admin_route.set("view engine", "ejs");
 admin_route.set("views", "./views/admin");
 
@@ -42,5 +43,5 @@ admin_route.get("*", function (req, res) {
 });
 
 
-
+//export
 module.exports = admin_route;

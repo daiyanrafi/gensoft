@@ -1,9 +1,13 @@
-const User = require("../models/userModel");
+//internal import
 const bcrypt = require("bcrypt");
+
+//External import
+const User = require("../models/userModel");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 const config = require("../config/config");
 
+//for secure password
 const securePassword = async (password) => {
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -95,6 +99,7 @@ const loadRegister = async (req, res) => {
   }
 };
 
+//insert user
 const insertUser = async (req, res) => {
   try {
     const spassword = await securePassword(req.body.password);
@@ -122,6 +127,7 @@ const insertUser = async (req, res) => {
   }
 };
 
+//verify email
 const verifyMail = async (req, res) => {
   try {
     const updateInfo = await User.updateOne(
@@ -136,7 +142,6 @@ const verifyMail = async (req, res) => {
 };
 
 //login user method started
-
 const loginLoad = async (req, res) => {
   try {
     res.render("login");
@@ -145,6 +150,7 @@ const loginLoad = async (req, res) => {
   }
 };
 
+//verify login
 const verifyLogin = async (req, res) => {
   try {
     const email = req.body.email;
@@ -172,6 +178,7 @@ const verifyLogin = async (req, res) => {
   }
 };
 
+//load home after verify
 const loadHome = async (req, res) => {
   try {
     res.render("home");
@@ -181,7 +188,6 @@ const loadHome = async (req, res) => {
 };
 
 //user logout
-
 const userLogout = async (req, res) => {
   try {
     req.session.destroy();
@@ -199,6 +205,7 @@ const forgetLoad = async (req, res) => {
     console.log(error.message);
   }
 };
+
 //forget verify
 const forgetVerify = async (req, res) => {
   try {
@@ -257,8 +264,7 @@ const resetPassword = async (req, res) => {
   }
 }
 
-
-
+//all exports
 module.exports = {
   loadRegister,
   insertUser,

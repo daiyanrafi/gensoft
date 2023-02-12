@@ -1,3 +1,5 @@
+
+//login
 const isLogin = async (req, res, next) => {
   try {
     if (req.session.user_id) {
@@ -11,6 +13,7 @@ const isLogin = async (req, res, next) => {
   }
 };
 
+//logout
 const isLogout = async (req, res, next) => {
   try {
     if (req.session.user_id) {
@@ -23,7 +26,7 @@ const isLogout = async (req, res, next) => {
   }
 };
 
-
+//export all the modules
 module.exports = {
     isLogin,
     isLogout

@@ -1,12 +1,15 @@
-const User = require("../models/userModel");
+//internal import
 const bcrypt = require("bcrypt");
-const { render } = require("../routers/userRoute");
-const rendomString = require("randomstring");
 const nodemailer = require("nodemailer");
 
+//external import
+const User = require("../models/userModel");
+const { render } = require("../routers/userRoute");
+const rendomString = require("randomstring");
 const config = require("../config/config");
 
-//for reset password saved save password
+
+//for reset secured password saved password
 const securePassword = async (password) => {
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -61,6 +64,7 @@ const loadLogin = async (req, res) => {
   }
 };
 
+//verify login
 const verifyLogin = async (req, res) => {
   try {
     const email = req.body.email;
@@ -79,7 +83,7 @@ const verifyLogin = async (req, res) => {
         }
       } else {
         res.render("login", { message: "Wrong...!" });
-      } /////////
+      } 
     } else {
       res.render("login", { message: "Successfull" });
     }
@@ -108,7 +112,7 @@ const logout = async (req, res) => {
   }
 };
 
-//for forget password
+//for forget password loadpage
 const forgetLoad = async (req, res) => {
   try {
     res.render("forget");
@@ -186,6 +190,7 @@ const adminDashboard = async (req, res) => {
 };
 
 
+//all exports
 module.exports = {
   loadLogin,
   verifyLogin,

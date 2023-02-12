@@ -25,6 +25,7 @@ const isLogout = async(req,res,next) => {
     }
 }
 
+//export all the modules
 module.exports = {
     isLogin,
     isLogout
